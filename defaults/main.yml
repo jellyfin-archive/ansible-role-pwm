@@ -1,0 +1,19 @@
+---
+# defaults file for ansible-role-pwm
+# support for nginx will be added later
+
+# tomcat
+tomcat_directory: "/var/lib"
+tomcat_instance: "tomcat8"
+# http server
+pwm_HTTP_server: "apache2"
+# ldap
+pwm_ldap_type: "openldap"
+pwm_ldap_admin: "pwmadmin"
+pwm_ldap_domain: "dc=example,dc=com"
+pwm_ldap_subtree: "ou=people,{{ pwm_ldap_domain }}"
+pwm_ldap_db: "mdb"
+pwm_ldap_tls: false
+# pwm
+pwm_new_account_registration: true
+...

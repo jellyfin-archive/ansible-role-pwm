@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-role-pwm
+
+- name: Configure ldap for pwm integration
+  include_tasks: ldap_integration.yml
+
+#- name: Install components required for pwm
+#  include_tasks: install.yml
+#
+#- name: Configure applications server
+#  include_tasks: application_server.yml
+#
+#- name: Configure HTTP server for new application
+#  include_tasks: HTTP_server.yml
+
+...

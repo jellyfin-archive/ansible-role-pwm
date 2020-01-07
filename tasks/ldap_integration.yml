@@ -1,0 +1,38 @@
+---
+# from: https://docs.google.com/document/d/1DtiDX2fbNco-f1fQKIVDsanOxX7WLS08mHOs10kKMow/edit
+
+- name: Template LDIF - ACL
+  template:
+    src: templates/pwm_openldap.acl.j2
+    dest: /tmp/ldap.ldif
+
+- name: Apply ACL needed for PWM
+  command: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/ldap.ldif
+  register: command_result
+  failed_when:
+    - command_result.rc > 0
+    - '"Type or value exists" not in command_result.stderr'
+
+- name: Clean LDIF
+  file:
+    state: absent
+    path: /tmp/ldap.ldif
+
+- name: Template LDIF - pwmUser schema
+  template:
+    src: templates/pwm_openldap.schema.j2
+    dest: /tmp/ldap.ldif
+
+- name: Add the pwmUser schema
+  command: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/ldap.ldif
+  register: command_result
+  failed_when:
+    - command_result.rc > 0
+    - '"Type or value exists" not in command_result.stderr'
+
+- name: Clean LDIF
+  file:
+    state: absent
+    path: /tmp/ldap.ldif
+
+...

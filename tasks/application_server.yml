@@ -1,0 +1,12 @@
+---
+
+# - name: determine url for pwm war
+# TODO
+
+
+- name: deploy war url
+  get_url:
+    url: "{{ pwm_war_url }}"
+    dest: "{{ tomcat_directory }}//{{ tomcat_instance }}/webapps/"
+    validate_certs: no
+...

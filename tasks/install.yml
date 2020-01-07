@@ -1,0 +1,36 @@
+---
+
+- name: Install http server, php, pip
+  apt:
+    name:
+      - php
+      - pip
+      - "{{ pwm_HTTP_server }}"
+    state: present
+  register: apt_result
+  retries: 3
+  until: apt_result is succeeded
+
+- name: Install apache php mod
+  apt:
+    name:
+      - libapache2-mod-php
+    state: present
+  register: apt_result
+  retries: 3
+  until: apt_result is succeeded
+  when: pwm_HTTP_server == "apache2"
+
+- name: Install Tomcat8 & Tomcat8 Tools
+  apt:
+    name:
+      - tomcat8
+      - tomcat8-docs
+      - tomcat8-examples
+      - tomcat8-admin
+
+- name: Install Ansible role required Python packages
+  pip:
+    name: lxml
+
+...
