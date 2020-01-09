@@ -1,16 +1,33 @@
 dn: olcDatabase={1}{{ pwm_ldap_db }},cn=config
 changetype: modify
+delete: olcAccess
+olcAccess: {0}
+-
 add: olcAccess
-olcAccess: to attrs=userPassword,shadowLastChange
-  by dn="cn={{ pwm_ldap_admin }},{{ pwm_ldap_domain }}" write
-  by dn="cn=admin,{{ pwm_ldap_domain }}" write
+olcAccess: {0}to attrs=userPassword by dn="{{ pwm_ldap_bind_user }}" write by dn="cn=admin,{{ pwm_ldap_domain }}" write by self write by anonymous auth by * none
+
+dn: olcDatabase={1}{{ pwm_ldap_db }},cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {1}
+-
+add: olcAccess
+olcAccess: {1}to attrs=shadowLastChange by dn="{{ pwm_ldap_bind_user }}" write by dn="cn=admin,{{ pwm_ldap_domain }}" write by dn="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth" write by self write by * read
+
+dn: olcDatabase={1}{{ pwm_ldap_db }},cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {2}
+-
+add: olcAccess
+olcAccess: {2}to dn.subtree="{{ pwm_ldap_subtree }}" by dn="{{ pwm_ldap_bind_user }}" write by dn="cn=admin,{{ pwm_ldap_domain }}" write by dn="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth" write by self write by anonymous auth by * read by * none
 
 dn: olcDatabase={1}{{ pwm_ldap_db }},cn=config
 changetype: modify
 add: olcAccess
-olcAccess: to dn.subtree={{ pwm_ldap_subtree }}
-    by dn="cn=admin,{{ pwm_ldap_domain }}" write
-    by dn="cn={{ pwm_ldap_admin }},{{ pwm_ldap_domain }}" write
-    by anonymous auth
-    by self write
-    by * none
+olcAccess: to attrs=pwmData by dn="{{ pwm_ldap_bind_user }}" write by dn="cn=admin,{{ pwm_ldap_domain }}" write by self write by * read
+
+dn: olcDatabase={1}{{ pwm_ldap_db }},cn=config
+changetype: modify
+add: olcAccess
+olcAccess: to * by * read

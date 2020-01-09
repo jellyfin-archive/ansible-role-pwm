@@ -7,6 +7,9 @@
 #- name: Install components required for pwm
 #  include_tasks: install.yml
 #
+#- name: Configure database server
+#  include_tasks: db_server.yml
+#
 #- name: Configure applications server
 #  include_tasks: application_server.yml
 #

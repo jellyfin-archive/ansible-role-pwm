@@ -9,9 +9,13 @@ tomcat_instance: "tomcat8"
 pwm_HTTP_server: "apache2"
 # ldap
 pwm_ldap_type: "openldap"
-pwm_ldap_admin: "pwmadmin"
 pwm_ldap_domain: "dc=example,dc=com"
 pwm_ldap_subtree: "ou=people,{{ pwm_ldap_domain }}"
+pwm_ldap_admin_group: "cn=pwmwebadmins,ou=groups,{{ pwm_ldap_domain }}"
+pwm_ldap_test_user_sn: "pwmtest"
+pwm_ldap_test_user: "cn={{ pwm_ldap_test_user_sn }},{{ pwm_ldap_subtree }}"
+#pwm refers the bind user as the proxy user
+pwm_ldap_bind_user: "cn=pwm-ldap-service,ou=machineaccounts,{{ pwm_ldap_domain }}"
 pwm_ldap_db: "mdb"
 pwm_ldap_tls: false
 # pwm

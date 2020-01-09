@@ -3,20 +3,24 @@
 # We try to define OID's "correctly" as outlined here:
 #
 # http://www.openldap.org/doc/admin23/schema.html
+# We try to define OID's "correctly" as outlined here:
 #
-# 1.3.6.1.4.1   base OID
-# 591242        organization idenfifier
-# 1             if an objectclass
-# 2             if an attribute
-# yyyy.mm.dd    date of creation
-# n             extra identifier
+# http://www.openldap.org/doc/admin23/schema.html
 #
+# 1.3.6.1.4.1 base OID
+# 35015 organization idenfifier
+# 1.1 if an objectclass
+# 1.2 if an attribute
+# n extra identifier
+# From: https://github.com/pwm-project/pwm/blob/921e21ce3064a5e9dd4c142cc9822cf03d571487/webapp/src/build/ldif/openldap.schema
 dn: cn=pwmUser,cn=schema,cn=config
 changetype: add
 objectClass: olcSchemaConfig
 cn: pwmUser
-olcAttributeTypes: ( 1.3.6.1.4.1.591242.2.2010.04.16.1 NAME 'pwmEventLog' SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
-olcAttributeTypes: ( 1.3.6.1.4.1.591242.2.2010.04.16.2 NAME 'pwmResponseSet' SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
-olcAttributeTypes: ( 1.3.6.1.4.1.591242.2.2010.04.16.3 NAME 'pwmLastPwdUpdate' SYNTAX 1.3.6.1.4.1.1466.115.121.1.24 )
-olcAttributeTypes: ( 1.3.6.1.4.1.591242.2.2010.04.16.4 NAME 'pwmGUID' SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
-olcObjectClasses: ( 1.3.6.1.4.1.591242.1.2010.04.16.1 NAME 'pwmUser' AUXILIARY MAY ( pwmLastPwdUpdate $ pwmEventLog $ pwmResponseSet $ pwmGUID ))
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.1 NAME 'pwmEventLog' EQUALITY octetStringMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.2 NAME 'pwmResponseSet' EQUALITY octetStringMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.3 NAME 'pwmLastPwdUpdate' SYNTAX 1.3.6.1.4.1.1466.115.121.1.24 )
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.4 NAME 'pwmGUID' SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.6 NAME 'pwmOtpSecret' EQUALITY octetStringMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
+olcAttributeTypes: ( 1.3.6.1.4.1.35015.1.2.7 NAME 'pwmData' EQUALITY octetStringMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.40 )
+olcObjectClasses: ( 1.3.6.1.4.1.35015.1.1.1 NAME 'pwmUser' AUXILIARY MAY ( pwmLastPwdUpdate $ pwmEventLog $ pwmResponseSet $ pwmOtpSecret $ pwmGUID $ pwmData ))

@@ -25,12 +25,15 @@
   apt:
     name:
       - tomcat8
-      - tomcat8-docs
-      - tomcat8-examples
-      - tomcat8-admin
+#      - tomcat8-docs
+#      - tomcat8-examples
+#      - tomcat8-admin
+    state: present
 
 - name: Install Ansible role required Python packages
   pip:
-    name: lxml
+    name:
+      - lxml
+      - python-ldap
 
 ...

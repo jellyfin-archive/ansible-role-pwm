@@ -9,4 +9,11 @@
     url: "{{ pwm_war_url }}"
     dest: "{{ tomcat_directory }}//{{ tomcat_instance }}/webapps/"
     validate_certs: no
+
+- name: Template config - pwm
+  template:
+    src: templates/pwm_config.j2
+    dest: /opt/pwm/PwmConfiguration.xml
+    owner: tomcat8
+    group: tomcat8
 ...
