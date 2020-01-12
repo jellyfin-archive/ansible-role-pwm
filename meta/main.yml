@@ -15,14 +15,13 @@ galaxy_info:
       versions:
         - bionic
         - cosmic
-        - disco
         - eoan
   galaxy_tags:
   - openldap
   - ldap
   - pwm
   - password
-  - password management
-  - user registration
+  - passwordmanagement
+  - userregistration
 
 dependencies: []

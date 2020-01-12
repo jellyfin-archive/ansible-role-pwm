@@ -4,14 +4,14 @@
   template:
     src: pwm.conf-{{ jellyfin_HTTP_server }}.j2
     dest: "{{ pwm_site_config }}"
-  when: pwm_HTTP_configured == false
+  when: not pwm_HTTP_configured
 
 - name: Enable pwm site
   file:
     src: /etc/{{ pwm_HTTP_server }}/sites-available/pwm.conf
     dest: /etc/{{ pwm_HTTP_server }}/sites-enabled/pwm.conf
     state: link
-  when: pwm_HTTP_configured == false
+  when: not pwm_HTTP_configured
 
 # find a location block and add a new location for pwm after that location block
 - name: add site location /pwm to {{ pwm_HTTP_server }}
@@ -31,7 +31,7 @@
                proxy_set_header X-Forwarded-Host $http_host;
       }
     state: present
-  when: pwm_HTTP_configured == true
+  when: pwm_HTTP_configured
 
 - name: Restart web server - {{ pwm_HTTP_server }}
   systemd:
