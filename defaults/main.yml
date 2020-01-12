@@ -6,18 +6,34 @@
 tomcat_directory: "/var/lib"
 tomcat_instance: "tomcat8"
 # http server
-pwm_HTTP_server: "apache2"
+pwm_HTTP_server: "nginx"
+pwm_site_config: /etc/{{ pwm_HTTP_server }}/sites-available/pwm.conf
+pwm_HTTP_configured: true
 # ldap
-pwm_ldap_type: "openldap"
+pwm_ldap_type: "OPEN_LDAP"
 pwm_ldap_domain: "dc=example,dc=com"
 pwm_ldap_subtree: "ou=people,{{ pwm_ldap_domain }}"
 pwm_ldap_admin_group: "cn=pwmwebadmins,ou=groups,{{ pwm_ldap_domain }}"
+#pwm_ldap_test_user will be created during the play
 pwm_ldap_test_user_sn: "pwmtest"
 pwm_ldap_test_user: "cn={{ pwm_ldap_test_user_sn }},{{ pwm_ldap_subtree }}"
 #pwm refers the bind user as the proxy user
 pwm_ldap_bind_user: "cn=pwm-ldap-service,ou=machineaccounts,{{ pwm_ldap_domain }}"
+pwm_ldap_bind_pwd: "ChangeMe"
 pwm_ldap_db: "mdb"
-pwm_ldap_tls: false
+pwm_ldap_urls:
+  - ldap://127.0.0.1:389
+# pwm db
+# only localdb tested
+pwm_db: "LOCALDB"
+pwm_db_class: ""
+pwm_db_url: "db_url"
+pwm_db_user: "dbuser"
+pwm_db_pwd: "dbpwd"
 # pwm
+pwm_release: 1.9.1
 pwm_new_account_registration: true
+pwm_site_url: "https://www.example.com/pwm"
+pwm_securitykey: "ChangeMe"
+pwm_newuser_redirecturl: "https://www.example.com"
 ...

@@ -4,16 +4,17 @@
 - name: Configure ldap for pwm integration
   include_tasks: ldap_integration.yml
 
-#- name: Install components required for pwm
-#  include_tasks: install.yml
-#
+- name: Install components required for pwm
+  include_tasks: install.yml
+
 #- name: Configure database server
 #  include_tasks: db_server.yml
+#  when: {{ pwm_db }} != "LOCALDB"
 #
-#- name: Configure applications server
-#  include_tasks: application_server.yml
-#
-#- name: Configure HTTP server for new application
-#  include_tasks: HTTP_server.yml
+- name: Configure applications server
+  include_tasks: application_server.yml
+
+- name: Configure HTTP server for new application
+  include_tasks: HTTP_server.yml
 
 ...

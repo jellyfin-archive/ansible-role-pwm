@@ -1,19 +1,43 @@
 ---
 
-# - name: determine url for pwm war
-# TODO
-
+- name: Stop tomcat8
+  systemd:
+    name: tomcat8
+    state: stopped
 
 - name: deploy war url
   get_url:
-    url: "{{ pwm_war_url }}"
-    dest: "{{ tomcat_directory }}//{{ tomcat_instance }}/webapps/"
-    validate_certs: no
+    url: "https://www.pwm-project.org/artifacts/pwm/release/v{{ pwm_release }}/pwm-{{ pwm_release }}.war"
+    dest: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/"
+    validate_certs: yes
+    owner: tomcat8
+    group: tomcat8
+
+- name: Create config directory
+  file:
+    state: directory
+    path: /opt/pwm/
+    owner: tomcat8
+    group: tomcat8
+
+- name: Add directory to tomcat path
+  lineinfile:
+    state: present
+    insertbefore: BOF
+    path: /etc/default/tomcat8
+    line: PWM_APPLICATIONPATH=/opt/pwm
 
 - name: Template config - pwm
   template:
     src: templates/pwm_config.j2
     dest: /opt/pwm/PwmConfiguration.xml
+    force: yes
+    backup: yes
     owner: tomcat8
     group: tomcat8
+
+- name: Start tomcat8
+  systemd:
+    name: tomcat8
+    state: started
 ...

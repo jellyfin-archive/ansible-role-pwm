@@ -19,7 +19,7 @@
   register: apt_result
   retries: 3
   until: apt_result is succeeded
-  when: pwm_HTTP_server == "apache2"
+  when: pwm_HTTP_server == "nginx"
 
 - name: Install Tomcat8 & Tomcat8 Tools
   apt:
@@ -33,7 +33,7 @@
 - name: Install Ansible role required Python packages
   pip:
     name:
-      - lxml
+#      - lxml
       - python-ldap
 
 ...
