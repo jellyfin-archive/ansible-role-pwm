@@ -18,7 +18,7 @@
 		   or 3. Remove restrictions of the configuration by using the the command line utility.
 
 -->
-  <settings modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+  <settings modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
     <setting key="template.ldap" syntax="SELECT" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>LDAP Vendor Default Settings</label>
       <value>{{ pwm_ldap_type }}</value>
@@ -33,10 +33,10 @@
     </setting>
     <setting key="ldap.serverUrls" syntax="STRING_ARRAY" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>LDAP URLs</label>
-      {% for item in pwm_ldap_urls %}
-      <value>{{ item }}</value>
-      {% endfor %}
-    </setting>
+    {% for item in pwm_ldap_urls %}
+    <value>{{ item }}</value>
+    {% endfor %}
+  </setting>
     <setting key="ldap.proxy.username" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>LDAP Proxy User</label>
       <value>{{ pwm_ldap_bind_user }}</value>
@@ -45,13 +45,13 @@
       <!--Please use the Configuration Manager GUI to modify this value.-->
       <!--Note: This value is encrypted and can not be edited directly.-->
       <label>LDAP Proxy Password</label>
-      <value>{{  pwm_ldap_bind_pwd  }}</value>
+      <value plaintext="true">{{  pwm_ldap_bind_pwd  }}</value>
     </setting>
     <setting key="ldap.rootContexts" syntax="STRING_ARRAY" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>LDAP Contextless Login Roots</label>
       <value>{{ pwm_ldap_subtree }}</value>
     </setting>
-    <setting key="ldap.testuser.username" syntax="STRING" profile="default" modifyTime="{{ ansible_date_time.iso8601 }}" syntaxVersion="0" modifyUser="default|generated on deployment">
+    <setting key="ldap.testuser.username" syntax="STRING" profile="default" modifyTime="{{ ansible_date_time.iso8601 }}" syntaxVersion="0" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>LDAP Test User</label>
       <value>{{ pwm_ldap_test_user }}</value>
     </setting>
@@ -61,21 +61,21 @@
     </setting>
     <setting key="db.classname" syntax="STRING" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Database Class</label>
-      <value {{ pwm_db_class }}/>
+      <value>{{ pwm_db_class }}</value>
     </setting>
     <setting key="db.url" syntax="STRING" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Database Connection String</label>
-      <value {{ pwm_db_url }}/>
+      <value>{{ pwm_db_url }}</value>
     </setting>
     <setting key="db.username" syntax="STRING" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Database User Name</label>
-      <value {{ pwm_db_user }}/>
+      <value>{{ pwm_db_user }}</value>
     </setting>
     <setting key="db.password" syntax="PASSWORD" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <!--Please use the Configuration Manager GUI to modify this value.-->
       <!--Note: This value is encrypted and can not be edited directly.-->
       <label>Database Password</label>
-      <value {{ pwm_db_pwd }}/>
+      <value plaintext="true">{{ pwm_db_pwd }}</value>
     </setting>
     <setting key="pwm.publishStats.enable" syntax="BOOLEAN" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Enable Anonymous Statistics Publishing</label>
@@ -83,7 +83,7 @@
     </setting>
     <setting key="pwm.publishStats.siteDescription" syntax="STRING" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Site Description</label>
-      <value />
+      <value></value>
     </setting>
     <setting key="pwm.selfURL" syntax="STRING" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}">
       <label>Site URL</label>
@@ -97,53 +97,57 @@
       <!--Please use the Configuration Manager GUI to modify this value.-->
       <!--Note: This value is encrypted and can not be edited directly.-->
       <label>Security Key</label>
-      <value>{{ pwm_securitykey }}</value>
+      <value plaintext="true">{{ pwm_securitykey }}</value>
     </setting>
-    <setting key="newUser.createContext" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.createContext" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Creation Context</label>
       <value>{{ pwm_ldap_subtree }}</value>
     </setting>
-    <setting key="newUser.form" syntax="FORM" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.form" syntax="FORM" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>New User Form</label>
       <value>{"name":"sn","minimumLength":1,"maximumLength":64,"type":"text","required":true,"confirmationRequired":false,"readonly":false,"unique":true,"multivalue":false,"labels":{"":"Username"},"regexErrors":{"":""},"description":{"":""},"regex":"^[a-zA-Z0-9 .,'@]*$","selectOptions":{},"maximumSize":0}</value>
     </setting>
-    <setting key="newUser.email.verification" syntax="BOOLEAN" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.email.verification" syntax="BOOLEAN" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Enable New User Email Verification</label>
       <value>false</value>
     </setting>
-    <setting key="newUser.redirectUrl" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.redirectUrl" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>After Registration Redirect URL</label>
       <value>{{ pwm_newuser_redirecturl }}</value>
     </setting>
-    <setting key="newUser.enable" syntax="BOOLEAN" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.enable" syntax="BOOLEAN" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Enable New User Registration</label>
       <value>{{ pwm_new_account_registration }}</value>
     </setting>
-    <setting key="newUser.profile.displayName" syntax="LOCALIZED_STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="newUser.profile.displayName" syntax="LOCALIZED_STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Profile Display Name</label>
       <value>sn</value>
     </setting>
-    <setting key="ldap.profile.displayName" syntax="LOCALIZED_STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="ldap.profile.displayName" syntax="LOCALIZED_STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>LDAP Profile Display Name</label>
       <value>sn</value>
     </setting>
-    <setting key="ldap.usernameSearchFilter" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="ldap.usernameSearchFilter" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>User Name Search Filter</label>
       <value>(&amp;(objectClass=inetOrgPerson)(sn=%USERNAME%))</value>
     </setting>
-    <setting key="challenge.forceSetup" syntax="BOOLEAN" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="challenge.forceSetup" syntax="BOOLEAN" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Force Response Setup</label>
       <value>false</value>
     </setting>
-    <setting key="ldap.username.attr" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|generated on deployment">
+    <setting key="ldap.username.attr" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
       <label>Attribute to use for User Name</label>
       <value>sn</value>
     </setting>
+    <setting key="newUser.writeAttributes" syntax="ACTION" profile="default" syntaxVersion="2" modifyTime="{{ ansible_date_time.iso8601 }}" modifyUser="default|cn=pwmadmin,ou=people,dc=tac-one,dc=com">
+      <label>New User Actions</label>
+      <value>{"name":"setaccountstanding","description":"Adds account standing attribute to ldap user. \nPossible values: good, pending, overdue, cancelled","webActions":[],"ldapActions":[{"ldapMethod":"add","attributeName":"accountstanding","attributeValue":"good"}]}</value>
+    </setting>
   </settings>
   <properties type="config" modifyTime="{{ ansible_date_time.iso8601 }}">
-    <property key="configPasswordHash" modifyTime="{{ ansible_date_time.iso8601 }}">$2y$10$lYRONDRezNzB9.3UeCt/oeGTc7ZVILWO.7h69c6jfeSt3sMuJF5eW</property>
     <property key="configIsEditable" modifyTime="{{ ansible_date_time.iso8601 }}">false</property>
     <property key="configEpoch" modifyTime="{{ ansible_date_time.iso8601 }}">6</property>
     <property key="saveConfigOnStart">true</property>
+    <property key="configPasswordHash" modifyTime="{{ ansible_date_time.iso8601 }}"></property>
   </properties>
 </PwmConfiguration>

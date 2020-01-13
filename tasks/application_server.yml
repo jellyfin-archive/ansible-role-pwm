@@ -1,14 +1,19 @@
 ---
 
-- name: Stop tomcat8
+- name: Remove existing deployed pwm
+  file:
+    path: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/pwm/"
+    state: absent
+
+- name: Restart tomcat8
   systemd:
     name: tomcat8
-    state: stopped
+    state: restarted
 
 - name: deploy war url
   get_url:
     url: "https://www.pwm-project.org/artifacts/pwm/release/v{{ pwm_release }}/pwm-{{ pwm_release }}.war"
-    dest: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/"
+    dest: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/pwm.war"
     validate_certs: yes
     owner: tomcat8
     group: tomcat8
@@ -16,7 +21,7 @@
 - name: Create config directory
   file:
     state: directory
-    path: /opt/pwm/
+    path: "{{ pwm_config_dir }}"
     owner: tomcat8
     group: tomcat8
 
@@ -25,19 +30,50 @@
     state: present
     insertbefore: BOF
     path: /etc/default/tomcat8
-    line: PWM_APPLICATIONPATH=/opt/pwm
+    line: "PWM_APPLICATIONPATH={{ pwm_config_dir }}"
 
 - name: Template config - pwm
   template:
     src: templates/pwm_config.j2
-    dest: /opt/pwm/PwmConfiguration.xml
+    dest: "{{ pwm_config_dir }}/PwmConfiguration.xml"
     force: yes
     backup: yes
     owner: tomcat8
     group: tomcat8
 
+- name: Restart tomcat8
+  systemd:
+    name: tomcat8
+    state: restarted
+
+- name: Wait until the war file has been extracted
+  wait_for:
+    path: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/pwm/"
+    state: present
+
+- name: Stopped tomcat8
+  systemd:
+    name: tomcat8
+    state: stopped
+
+- name: Changing perm of "command.sh"", adding "+x"
+  file:
+    dest: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/pwm/WEB-INF/command.sh"
+    mode: a+x
+
+- name: Set Config Password
+  shell:
+    cmd: "./command.sh ConfigSetPassword {{ pwm_config_pwd }}"
+    chdir: "{{ tomcat_directory }}/{{ tomcat_instance }}/webapps/pwm/WEB-INF/"
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+    PWM_APPLICATIONPATH: "{{ pwm_config_dir }}"
+  register: command_result
+  failed_when: "'success' not in command_result.stdout"
+
 - name: Start tomcat8
   systemd:
     name: tomcat8
     state: started
+
 ...

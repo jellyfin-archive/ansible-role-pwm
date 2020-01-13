@@ -14,7 +14,8 @@ python-ldap package required: install is handled in the role if you don't alread
 Role Variables
 --------------
 
-* tomcat specific
+* misc
+  * `java_home`: command.sh kicks off a java program to configure PWM. So we need to know where JAVA_HOME is. Default: `/usr`
   * `tomcat_directory`: PWM is a java app deployed to tomcat. This is the directory that your tomcat instance folders are held in. Default upon tomcat installation is: `/var/lib`
   * `tomcat_instance`: Folder name for the instance you want pwm to be deployed to. default is `tomcat8`
   * `pwm_HTTP_server`: Right now this role only supports nginx as the reverse proxy
@@ -32,6 +33,8 @@ Role Variables
 * DB specific
   * `pwm_db` : PWM stores user information in a database. `LOCALDB` is the only one that has been test. But a remote RDBMS should work
   * Other db parameters referenced in the PWM config are included in the defaults, but I have not tested them.
+* App server specific
+  * `pwm_config_dir` : The directory in which the PWM config files are stored. Default: `/opt/pwm`
 * PWM specific
   * `pwm_release` : The release that you would like to download and configure. Default: 1.9.1
   * `pwm_new_account_registration` : Whether you want to allow new users to register. Default: `true`
@@ -41,6 +44,7 @@ Role Variables
   * `pwm_site_url` : Default: https://www.example.com/pwm
   * `pwm_securitykey` : You have to provide the key when changing the configs within PWM. Default: `ChangeMe`
   * `pwm_newuser_redirecturl` : Where you want your users to be redirected to after they have registered. Default: `https://www.example.com`
+  * `pwm_config_pwd` : Important password that is used to modify the PWM config via the web interface, even while logged in as an admin, you will be prompted for this password. Default: `SecurelyChangeMe`
   
   
 Dependencies
@@ -60,6 +64,8 @@ Including an example of how to use your role (for instance, with variables passe
          pwm_ldap_domain: dc=example,dc=com
          pwm_site_config: /etc/nginx/sites-available/nginx.conf
          pwm_securitykey: Blah1234
+         pwm_config_pwd: Blash4321
+         
 
 License
 -------

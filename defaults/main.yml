@@ -1,7 +1,8 @@
 ---
 # defaults file for ansible-role-pwm
 # support for nginx will be added later
-
+#misc
+java_home: "/usr"
 # tomcat
 tomcat_directory: "/var/lib"
 tomcat_instance: "tomcat8"
@@ -27,13 +28,19 @@ pwm_ldap_urls:
 # only localdb tested
 pwm_db: "LOCALDB"
 pwm_db_class: ""
-pwm_db_url: "db_url"
-pwm_db_user: "dbuser"
-pwm_db_pwd: "dbpwd"
+pwm_db_url: ""
+pwm_db_user: ""
+pwm_db_pwd: ""
+# pwm app server
+pwm_config_dir: "/opt/pwm"
 # pwm
 pwm_release: 1.9.1
 pwm_new_account_registration: true
 pwm_site_url: "https://www.example.com/pwm"
-pwm_securitykey: "ChangeMe"
+#MUST BE 32 CHARS in length
+#
+pwm_securitykey: "ChangeMeChangeMeChangeMeChangeMe"
+# To access the configuration management web interface you need to be logged in as admin and you need to provide this config password
+pwm_config_pwd: "SecurelyChangeMe"
 pwm_newuser_redirecturl: "https://www.example.com"
 ...

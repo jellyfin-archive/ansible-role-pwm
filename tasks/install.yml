@@ -4,7 +4,7 @@
   apt:
     name:
       - php
-      - pip
+      - python-pip
       - "{{ pwm_HTTP_server }}"
     state: present
   register: apt_result
@@ -19,7 +19,7 @@
   register: apt_result
   retries: 3
   until: apt_result is succeeded
-  when: pwm_HTTP_server == "nginx"
+  when: pwm_HTTP_server == "apache2"
 
 - name: Install Tomcat8 & Tomcat8 Tools
   apt:
