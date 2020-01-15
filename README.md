@@ -42,7 +42,7 @@ Role Variables
     * The default profile is used for creating new accounts. 
     * The default config only requires new users to specify a username AND captcha is not required
   * `pwm_site_url` : Default: https://www.example.com/pwm
-  * `pwm_securitykey` : You have to provide the key when changing the configs within PWM. Default: `ChangeMe`
+  * `pwm_securitykey` : The security key needs to be at a minimum 32 chars in length. You have to provide the key when changing the configs within PWM. Default: `ChangeMe`
   * `pwm_newuser_redirecturl` : Where you want your users to be redirected to after they have registered. Default: `https://www.example.com`
   * `pwm_config_pwd` : Important password that is used to modify the PWM config via the web interface, even while logged in as an admin, you will be prompted for this password. Default: `SecurelyChangeMe`
   
