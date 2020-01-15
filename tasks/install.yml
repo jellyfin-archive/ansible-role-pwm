@@ -30,7 +30,7 @@
 #      - tomcat8-admin
     state: present
 
-- name: Install Ansible role required Python packages
+- name: Install Python package dependency
   pip:
     name:
 #      - lxml
