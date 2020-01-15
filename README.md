@@ -63,8 +63,10 @@ Including an example of how to use your role (for instance, with variables passe
          - role: tiedtoastar.ansible-role-pwm
          pwm_ldap_domain: dc=example,dc=com
          pwm_site_config: /etc/nginx/sites-available/nginx.conf
+         pwm_new_account_registration: false
          pwm_securitykey: Blah1234
-         pwm_config_pwd: Blash4321
+         pwm_config_pwd: SecurelyChangeMe
+         
          
 
 License
